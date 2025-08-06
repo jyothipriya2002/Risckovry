@@ -1,0 +1,195 @@
+Instead of writing the username and password in the application properties we can creating file in the local storage .
+package com.shfl.riskcovry.config;
+
+
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Component;
+
+@Configuration
+
+@PropertySource(value = { "file:${STLAP_LMS}/lms_application.properties" })
+
+@Component
+
+public class DataSourceConfig {
+
+
+
+	@Value("${spring.datasource.hfstest.driver-class-name}")
+
+	private String driverName;
+
+	@Value("${spring.datasource.hfstest.url}")
+
+	private String url;
+
+	@Value("${spring.datasource.hfstest.username}")
+
+	private String userName;
+
+	@Value("${spring.datasource.hfstest.password}")
+
+     private String password;
+	@Bean
+
+	public DataSource getDataSource() throws Exception {
+
+		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+		dataSource.setDriverClassName(driverName);
+
+		dataSource.setUrl(url);
+
+		dataSource.setUsername(userName);
+
+		dataSource.setPassword(password);
+
+		return dataSource;
+
+	}
+
+	public String getDriverName() {
+
+	return driverName;
+
+	}
+
+	public void setDriverName(String driverName) {
+
+		this.driverName = driverName;
+
+	}
+
+	public String getUrl() {
+
+		return url;
+
+	}
+
+	public void setUrl(String url) {
+
+		this.url = url;
+
+	}
+
+	public String getUserName() {
+
+		return userName;
+
+	}
+
+	public void setUserName(String userName) {
+
+		this.userName = userName;
+
+	}
+
+	public String getPassword() {
+
+		return password;
+
+	}
+
+	public void setPassword(String password) {
+
+		this.password = password;
+
+	}
+
+}
+=============================================================
+lms_application (Properties Source File (.properties))
+
+spring.datasource.hfstest.url=jdbc:oracle:thin:@192.168.17.203:1753/HOMETEST
+
+spring.datasource.hfstest.username=SBNPPHFLLIVE
+
+spring.datasource.hfstest.password=live$home
+
+spring.datasource.hfstest.driver-class-name=oracle.jdbc.driver.OracleDriver
+ 
+ 
+#Audit Environment
+
+# spring.datasource.pvr.url=jdbc:oracle:thin:@192.168.17.203:1523/HOMEAUD
+
+# spring.datasource.pvr.username=HOMEdba
+
+# spring.datasource.pvr.password=dba$home
+
+# spring.datasource.pvr.driver-class-name=oracle.jdbc.OracleDriver
+ 
+ 
+#Beta Environment
+
+spring.datasource.hfsbeta.url=jdbc:oracle:thin:@192.168.17.7:1677/HOMEBETA
+
+spring.datasource.hfsbeta.username=SBNPPHFLLIVE
+
+spring.datasource.hfsbeta.password=live$home
+
+spring.datasource.hfsbeta.driver-class-name=oracle.jdbc.OracleDriver
+
+spring.datasource.c3p0.min-size=10
+
+spring.datasource.c3p0.max-size=200
+
+spring.datasource.c3p0.idle-test-period=120
+
+spring.datasource.c3p0.timeout=300
+
+spring.datasource.c3p0.max-statements=50
+
+spring.datasource.c3p0.acquire-increment=1
+ 
+ 
+spring.datasource.hfslive.url=jdbc:oracle:thin:@192.168.17.7:1677/HOMEBETA
+
+spring.datasource.hfslive.username=SBNPPHFLLIVE
+
+spring.datasource.hfslive.password=live$home
+
+spring.datasource.hfslive.driver-class-name=oracle.jdbc.OracleDriver
+
+spring.datasource.c3p0.min-size=10
+
+spring.datasource.c3p0.max-size=200
+
+spring.datasource.c3p0.idle-test-period=120
+
+spring.datasource.c3p0.timeout=300
+
+spring.datasource.c3p0.max-statements=50
+
+spring.datasource.c3p0.acquire-increment=1
+ 
+ 
+ 
+spring.datasource.url=jdbc:sqlserver://SHFLCHNSQL06.sundaramhome.ad;database=STLAPUAT;encrypt=true;trustServerCertificate=true;
+
+spring.datasource.username=stlapqryusr
+
+spring.datasource.password=stlapqryusr$2023
+
+spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+ 
+ 
+
+
+spring.datasource.ekyc.url=jdbc:sqlserver://SHFLCHNSQL06.sundaramhome.ad;database=EKYCUAT;encrypt=true;trustServerCertificate=true;
+
+spring.datasource.ekyc.username=stlosusr
+
+spring.datasource.ekyc.password=stlosusr
+
+spring.datasource.ekyc.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+ 
+  
+
