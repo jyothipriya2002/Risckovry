@@ -1,0 +1,48 @@
+package com.shfl.riskcovry.AopLogger;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class Riskcovry {
+
+    private static final Logger logger = LoggerFactory.getLogger(Riskcovry.class);
+
+    @Pointcut("execution(* com.shfl.riskcovry..*(..))")
+    public void applicationPackagePointcut() {}
+
+    @Before("applicationPackagePointcut()")
+    public void logBefore(JoinPoint joinPoint) {
+        logger.info("➡️ {}() called", joinPoint.getSignature().getName());
+    }
+
+    @AfterReturning(pointcut = "applicationPackagePointcut()", returning = "result")
+    public void logAfterReturning(JoinPoint joinPoint, Object result) {
+        logger.info("✅ {}() returned: {}", joinPoint.getSignature().getName(), result);
+    }
+
+    @AfterThrowing(pointcut = "applicationPackagePointcut()", throwing = "ex")
+    public void logAfterThrowing(JoinPoint joinPoint, Throwable ex) {
+        logger.error("❌ {}() threw: {}", joinPoint.getSignature().getName(), ex.getMessage(), ex);
+    }
+
+    @After("applicationPackagePointcut()")
+    public void logAfterFinally(JoinPoint joinPoint) {
+        logger.info("🔚 {}() completed", joinPoint.getSignature().getName());
+    }
+}
+==========================================
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+===========
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+==============================================
