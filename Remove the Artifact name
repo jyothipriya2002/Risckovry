@@ -1,0 +1,1 @@
+ <finalName>${project.artifactId}</finalName> ==== we have to add this one line in the pom.xml build.
